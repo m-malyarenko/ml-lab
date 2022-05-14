@@ -25,7 +25,7 @@ rmse <- function(observ, pred) {
 # RSS regression
 
 rss <- lm(
-  calAge ~ Depth + Weight,
+  calAge ~ Depth,
   data = data
 )
 

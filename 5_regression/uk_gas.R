@@ -50,9 +50,9 @@ for (i in 1:4) {
     y = data[ , i],
     ylim = c(0, 1200),
     
-    ylab = "Income",
-    xlab = "Year",
-    main = paste("Quarter #", i, sep = ""),
+    ylab = "Расход газа",
+    xlab = "Год",
+    main = paste("Квартал #", i, sep = ""),
     
     type = "b",
     pch = 19,
