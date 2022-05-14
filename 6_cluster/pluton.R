@@ -1,12 +1,17 @@
+library(cluster)
 data("pluton")
 
 within_ss <- c()
 
-for (i in 1:(nrow(pluton) - 1)) {
-  clusters <- kmeans(pluton, i)
+for (i in 1:100) {
+  clusters <- kmeans(pluton, 3, iter.max = i, nstart = 3)
   print(paste("k:", i, "within_ss:", clusters$tot.withinss))
   within_ss <- append(within_ss, clusters$tot.withinss)
 }
 
-optimal_k <- which.min(within_ss)
-cat("Min within ss = ", within_ss[optimal_k], "optimal k =", optimal_k, "\n")
+optimal_iter_max <- which.min(within_ss)
+cat(
+  "Min within ss = ",
+  within_ss[optimal_iter_max],
+  "optimal iter =",
+  optimal_iter_max, "\n")
