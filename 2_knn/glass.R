@@ -72,9 +72,9 @@ plot(
   pch = 19,
   col = "blue",
   
-  xlab = "k",
+  xlab = "p",
   ylab = "Ошибка классификации",
-  main = "Зависимость ошибки классификации от параметра расстояния Минковского"
+  main = "Зависимость ошибки от параметра расстояния Минковского"
 )
 
 # Classification example
@@ -90,10 +90,21 @@ sample <- data.frame(
   Fe = 0.1 
 )
 
-knn_result <- kknn(Class ~ ., data, sample, k = 10)
+knn_result <- kknn(Class ~ ., data, sample, k = 15)
 pred <- knn_result$fitted.values
 
 # Attribute impact on classification
+cross_train <- train.kknn(
+  Class ~ .,
+  data = data,
+  ks = c(round(sqrt(nrow(data)))),
+  kernel = "optimal",
+  kcv = 10,
+  distance = distance
+)
+
+ref_accuracy <- 1 - cross_train$MISCLASS[1]
+
 accuracy <- c()
 factors <- colnames(data)
 factors <- factors[-length(factors)]
@@ -110,7 +121,7 @@ for (x in factors) {
     distance = distance
   )
 
-  accuracy <- append(accuracy, 1 - cross_train$MISCLASS[1])
+  accuracy <- append(accuracy, (ref_accuracy - (1 - cross_train$MISCLASS[1]))^2)
 }
 
 plot(
@@ -123,8 +134,8 @@ plot(
   
   xlab = "Признак",
   xaxt = "n",
-  ylab = "Точность классификации",
-  main = "Зависимость точности классификации от признака"
+  ylab = "Квадрат отклонения точности классификации",
+  main = "Зависимость отклонения точности классификации от признака"
 )
 axis(1, at = 1:(ncol(data) - 1), labels = factors)
 

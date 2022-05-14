@@ -69,5 +69,21 @@ plot(
   xlab = "X1",
   ylab = "X2",
   
-  main = "Обучающая выборка"
+  main = "Тестовая выборка"
+)
+
+optimal_k <- which.max(accuracy)
+cat("Optimal k:", optimal_k, "\n")
+
+plot(
+  x = data_train$X1,
+  y = data_train$X2,
+  
+  pch = 19,
+  col = as.character(data_train$Colors),
+  
+  xlab = "X1",
+  ylab = "X2",
+  
+  main = "Тестовая выборка"
 )
