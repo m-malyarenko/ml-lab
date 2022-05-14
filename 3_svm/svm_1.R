@@ -28,6 +28,19 @@ plot(
   main = "Тренировочная выборка"
 )
 
+plot(
+  x = data_test$X1,
+  y = data_test$X2,
+  
+  col = as.character(data_test$Color),
+  type = "p",
+  pch = 19,
+  
+  xlab = "X1",
+  ylab = "X2",
+  main = "Тесовая выборка"
+)
+
 svm_model <- svm(
   Color ~ X1 + X2,
   data = data_train,

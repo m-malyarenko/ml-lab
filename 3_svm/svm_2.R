@@ -28,6 +28,19 @@ plot(
   main = "Тренировочная выборка"
 )
 
+plot(
+  x = data_test$X1,
+  y = data_test$X2,
+  
+  col = as.character(data_test$Color),
+  type = "p",
+  pch = 19,
+  
+  xlab = "X1",
+  ylab = "X2",
+  main = "Тестовая выборка"
+)
+
 # Find optimal C for train data
 cat("Train data\n")
 train_accuracy <- c()
@@ -76,7 +89,7 @@ test_accuracy <- c()
 for (c in 1:30) {
   svm_model <- svm(
     Color ~ X1 + X2,
-    data = data_test,
+    data = data_train,
     type = "C-classification",
     cost = c,
     kernel = "linear"
